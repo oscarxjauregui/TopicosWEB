@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
+
+
 
 class ContactController extends Controller
 {
@@ -46,9 +50,18 @@ class ContactController extends Controller
             $contact->subject = $request->input('subject');
             $contact->message = $request->input('message');
             $contact->save();
-            return redirect()->route('contact.index')->with('success', 'You message has been
 
-sent.');
+            $details = [
+                'fullname' => $request->input('fullname'),
+                'email' => $request->input('email'),
+                'subject' => $request->input('subject'),
+                'message' => $request->input('message')
+            ];
+
+            // Enviar correo al administrador
+            Mail::to('oscarxjauregui@gmail.com')->send(new ContactMessage($details));
+
+            return redirect()->route('contact.index')->with('success', 'You message has beensent.');
         }
     }
 
