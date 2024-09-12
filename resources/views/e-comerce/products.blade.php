@@ -52,41 +52,43 @@
                             </div>
                         </div>
                         @foreach ($products as $p)
-    <div class="col-md-4">
-        <div class="product-item">
-            <a href="{{ route('product_detail', $p->id) }}">
-                <div class="product-image">
-                    @foreach (json_decode($p->images) as $img )
-                        @if ($loop->first)
-                            <img src="{{ asset('img') }}/{{ $img }}" alt="Product Image">
-                        @endif
-                    @endforeach
-                </div>
-                <div class="product-title">
-                    <h3>{{ $p->name }}</h3>
-                    <div class="ratting">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                </div>
-            </a>
-            <div class="product-action">
-                <a href="#"><i class="fa fa-heart"></i></a>
-                <a href="#"><i class="fa fa-search"></i></a>
-            </div>
-            <div class="product-price">
-                <h3><span>$</span>{{$p -> price}}</h3>
-                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-            </div>
-        </div>
-    </div>
-@endforeach
+                            <div class="col-md-4">
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="#">{{$p -> name}}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="/product-detail/{{$p->id}}">
+                                            @foreach (json_decode($p->images) as $img )
+                                                @if ($loop->first)
+                                                    <img src="{{ asset('img') }}/{{ $img }}" alt="Product Image">
+                                                    @break
+                                                @endif
+                                            @endforeach
 
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="/product-detail/{{$p->id}}"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="#"><i class="fa fa-heart"></i></a>
+                                            <a href="/product-detail/{{$p->id}}"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <h3><span>$</span>{{$p -> price}}</h3>
+                                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    
+
                     <!-- Pagination Start -->
                     <div class="col-md-12">
                     {{ $products->links() }}
@@ -103,10 +105,10 @@
                                 </li>
                             </ul>
                         </nav>-->
-                    </div> 
+                    </div>
                     <!-- Pagination Start -->
-                </div>           
-                
+                </div>
+
                 <!-- Side Bar Start -->
                 <div class="col-lg-4 sidebar">
                     <div class="sidebar-widget category">
@@ -121,7 +123,7 @@
                             </ul>
                         </nav>
                     </div>
-                    
+
                     <div class="sidebar-widget widget-slider">
                         <div class="sidebar-slider normal-slider">
                             <div class="product-item">
@@ -204,7 +206,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="sidebar-widget brands">
                         <h2 class="title">Our Brands</h2>
                         <ul>
@@ -216,7 +218,7 @@
                             <li><a href="#">Sagittis</a><span>(28)</span></li>
                         </ul>
                     </div>
-                    
+
                     <div class="sidebar-widget tag">
                         <h2 class="title">Tags Cloud</h2>
                         <a href="#">Lorem ipsum</a>
@@ -237,8 +239,8 @@
             </div>
         </div>
     </div>
-    <!-- Product List End -->  
-    
+    <!-- Product List End -->
+
     <!-- Brand Start -->
     <div class="brand">
         <div class="container-fluid">

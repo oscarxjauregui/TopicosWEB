@@ -17,14 +17,21 @@ class HomeController extends Controller
 
     public function products($category_id = null)
     {
-        $products = (is_null ($category_id))? 
-        Product::paginate(15): 
-        Product::where('category_id', $category_id)->paginate(5);
+        $products = (is_null($category_id)) ?
+            Product::paginate(12) :
+            Product::where('category_id', $category_id)->paginate(9);
         $categories = Category::all();
-        // dd($products);
-        // return view('e-comerce.products', ['products'=>$products]);
-        return view('e-comerce.products', compact('products', 'categories'));
 
+        return view('e-comerce.products', compact('products', 'categories'));
+    }
+
+    public function product_detail($product_id)
+    {
+        $product = Product::find($product_id);
+        $specifications = json_decode($product->specification, true);
+        // para traer la ultima review
+        $reviews = Reviews::where('product_id', $product_id)->latest()->first();
+        return view('e-comerce.product-detail', compact('product', 'specifications', 'reviews'));
     }
 
     public function cart()

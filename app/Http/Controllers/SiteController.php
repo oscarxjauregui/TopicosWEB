@@ -5,28 +5,41 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\reviews;
+
 
 class SiteController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('e-comerce.index');
     }
 
-    public function products($category_id = null){
-        $products =(is_null($category_id)) ? 
-        Product::paginate(12) : 
-        Product::where('category_id', $category_id)->paginate(9);
+    public function products($category_id = null)
+    {
+        $products = (is_null($category_id)) ?
+            Product::paginate(12) :
+            Product::where('category_id', $category_id)->paginate(9);
         $categories = Category::all();
 
         return view('e-comerce.products', compact('products', 'categories'));
     }
 
-    public function product_detail($product_id){
+    public function product_detail($product_id)
+    {
         $product = Product::find($product_id);
-        return view('e-comerce.product-detail', compact('product'));
+        $specifications = json_decode($product->specification, true);
+
+        // Traer todas las reseñas
+        $reviews = Reviews::where('product_id', $product_id)->latest()->get();
+
+        return view('e-comerce.product-detail', compact('product', 'specifications', 'reviews'));
     }
 
-    public function productBycategory(){
+
+
+    public function productBycategory()
+    {
         // Opcion 1
         $cat = Category::find(1);
         $products = $cat->products;
@@ -37,47 +50,58 @@ class SiteController extends Controller
         //die();
     }
 
-    public function cart(){
+    public function cart()
+    {
         return view('e-comerce.cart');
     }
 
-    public function checkout(){
+    public function checkout()
+    {
         return view('e-comerce.checkout');
     }
 
-    public function login(){
+    public function login()
+    {
         return view('e-comerce.login');
     }
 
-    public function my_account(){
+    public function my_account()
+    {
         return view('e-comerce.my-account');
     }
 
-    public function wishlist(){
+    public function wishlist()
+    {
         return view('e-comerce.wishlist');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('e-comerce.contact');
     }
 
-    public function profile($username){
-        return view('profile', ['username'=>$username]);
+    public function profile($username)
+    {
+        return view('profile', ['username' => $username]);
     }
 
-    public function work(){
+    public function work()
+    {
         return view('work');
     }
 
-    public function about(){
+    public function about()
+    {
         return view('about');
     }
 
-    public function services(){
+    public function services()
+    {
         return view('services');
     }
 
-    public function blog(){
+    public function blog()
+    {
         return view('blog');
     }
 }
